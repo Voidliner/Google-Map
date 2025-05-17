@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Google Maps – Clean View</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    /* Full-screen plain map */
+    #map {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    /* Centered circular overlay for traffic map */
+    .circle-wrapper {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 60vmin;           /* Size of the circle */
+      height: 60vmin;          /* Size of the circle */
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(0,0,0,0.4);
+      z-index: 10;
+      pointer-events: none;     /* Allows clicks to pass through the wrapper */
+    }
+
+    #traffic-map {
+      width: 100%;
+      height: 100%;
+      pointer-events: auto;     /* Still allows interactivity inside the circle */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background map -->
+  <div id="map"></div>
+
+  <!-- Centered circular traffic map -->
+  <div class="circle-wrapper">
+    <div id="traffic-map"></div>
+  </div>
+
+  <script>
+    let map, trafficMap;
+    let syncing = false;
+
+    function initMap() {
+      const centerCoords = { lat: 14.8370, lng: 120.8856 }; // Guiguinto, Bulacan
+
+      // Plain map (background)
+      map = new google.maps.Map(document.getElementById("map"), {
+        center: centerCoords,
+        zoom: 12,
+        mapTypeId: 'roadmap',  // Default to 'roadmap' view
+        disableDefaultUI: true, // Disable all default UI controls
+      });
+
+      new google.maps.Marker({
+        position: centerCoords,
+        map: map,
+        title: "Plain Map",
+      });
+
+      // Circular traffic map (center overlay)
+      trafficMap = new google.maps.Map(document.getElementById("traffic-map"), {
+        center: centerCoords,
+        zoom: 12,
+        mapTypeId: 'roadmap',  // Default to 'roadmap' view
+        disableDefaultUI: true, // Disable all default UI controls
+        disableDefaultUI: true,
+      });
+
+      const trafficLayer = new google.maps.TrafficLayer();
+      trafficLayer.setMap(trafficMap);
+
+      // Synchronize both maps
+      syncMaps(map, trafficMap);
+      syncMaps(trafficMap, map);
+    }
+
+    function syncMaps(source, target) {
+      source.addListener("center_changed", () => {
+        if (syncing) return;
+        syncing = true;
+        target.setCenter(source.getCenter());
+        target.setZoom(source.getZoom());
+        syncing = false;
+      });
+    }
+  </script>
+
+  <!-- Google Maps API -->
+  <script 
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDp1VnY9DWXcVL1xfkiN7PYzzRh0zgQETU&callback=initMap" 
+    async 
+    defer>
+  </script>
+
+</body>
+</html>
