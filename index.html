@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Local Highways</title>
+  <link rel="icon" href="Visuals/visual_logo.png" type="image/png">
+  <style>
+    @font-face {
+     font-family: 'Brokstate SemiBold';
+     src: url('Font/BROKSTATE-Semibold.otf') format('opentype');
+     font-weight: 600; 
+     font-style: normal;
+    } 
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    body {
+      position: relative;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    #container {
+      position: absolute;
+      top: 25%;
+      left: 50%;
+      width: 100px;
+      height: 100px;
+      z-index: 3;
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: sans-serif;
+      font-size: 18px;
+      transform: translate(-50%, -50%);
+    }
+
+    #menu_logo {
+      position: absolute;
+      top: 0%;
+      left: 0%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #menuContainer {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 400px;
+      height: 450px;
+      z-index: 2;
+      background-color: rgba(50, 50, 50, 0.8);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      font-family: sans-serif;
+      font-size: 18px;
+      transform: translate(-50%, -50%);
+      border-radius: 60px;
+      padding-top: 60px; /* pushes all content down a bit */
+    }
+
+    #Apptitle{
+      position: absolute;
+      top: 35%;
+      left: 50%; 
+      width: 270px;
+      height: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      transform: translate(-50%, -50%);
+	}
+    #Signin-btn{
+      position: absolute;
+      top: 40%;
+      left: 23%;
+      width: 100px;
+      height: 30px;
+      cursor: pointer;
+      transition: text-shadow 0.3s ease;
+      font-family: 'Brokstate SemiBold', sans-serif;
+      color: white;
+      font-size: 30px;
+	}
+    #Signup-btn{
+      position: absolute;
+      top: 40%;
+      left: 52%;
+      width: 100px;
+      height: 30px;
+      cursor: pointer;
+      font-family: 'Brokstate SemiBold', sans-serif;
+      color: white;
+      font-size: 30px;
+	}
+    #Signin-btn:hover, #Signup-btn:hover {
+      text-shadow:
+       0 0 3px rgba(255, 255, 255, 0.5),
+       0 0 16px rgba(255, 255, 255, 0.4);
+      color: white;
+	}
+    #Log-btn{
+	position: absolute;
+        top: 85%;
+        left: 50%;
+        width: 200px;
+        height: 50px;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Brokstate SemiBold', sans-serif;
+        color: black;
+        font-size: 30px;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+	}
+    #LoginWrapper {
+      position: relative;
+      width: 300px;
+      margin-top: 190px;
+    }
+
+    #LoginInput {
+      width: 100%;
+      height: 60px;
+      background-color: rgba(50, 50, 50, 0.8);
+      border: none;
+      color: white;
+      padding: 0 20px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    #LoginInput:focus {
+      outline: none;
+    }
+
+    #MenuNameLine {
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%) scaleX(0);
+      transform-origin: center;
+      height: 3px;
+      background-color: white;
+      width: 100%;
+      transition: transform 0.3s ease;
+    }
+
+    #LoginWrapper:focus-within #MenuNameLine {
+      transform: translateX(-50%) scaleX(1);
+    }
+
+    /* Password Input */
+    #PasswordWrapper {
+      position: relative;
+      width: 300px;
+      margin-top: 10px; /* More space between the inputs */
+    }
+
+    #PasswordInput {
+      width: 100%;
+      height: 60px;
+      background-color: rgba(50, 50, 50, 0.8);
+      border: none;
+      color: white;
+      padding: 0 20px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    #PasswordInput:focus {
+      outline: none;
+    }
+
+    #PasswordNameLine {
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%) scaleX(0);
+      transform-origin: center;
+      height: 3px;
+      background-color: white;
+      width: 100%;
+      transition: transform 0.3s ease;
+    }
+
+    #PasswordWrapper:focus-within #PasswordNameLine {
+      transform: translateX(-50%) scaleX(1);
+    }
+  </style>
+</head>
+<body>
+  <img src="Visuals/visual_bg_2.png" alt="Background">
+  
+  <div id="container">
+    <img src="Visuals/visual_logo.png" id="menu_logo" alt="Logo">
+  </div>
+
+  <div id="menuContainer">
+    <!-- Username -->
+    <div id = "Apptitle">
+ 	<img src = "Visuals/visual_title.png">
+    </div>
+    <div id = "Signin-btn">
+        Sign In
+    </div>
+    <div id = "Signup-btn">
+        Sign Up
+    </div>
+    <div id = "Log-btn" onclick="window.location.href='map.html'">
+        Log In
+    </div>
+    <div id="LoginWrapper">
+      <input type="text" id="LoginInput" placeholder="Username" />
+      <div id="MenuNameLine"></div>
+    </div>
+
+    <!-- Password -->
+    <div id="PasswordWrapper">
+      <input type="password" id="PasswordInput" placeholder="Password" />
+      <div id="PasswordNameLine"></div>
+    </div>
+  </div>
+</body>
+</html>
