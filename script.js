@@ -2,6 +2,9 @@ window.login_code = 0;
 
 var code = 1;
 
+if (window.login_code == 0){
+  document.getElementById("allMap").style.display = "none";
+  } 
 
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -46,6 +49,7 @@ var code = 1;
                 document.getElementById("Log-btn").innerHTML = "Confirmed";
                 window.location.href = "map.html";
                 window.login_code = 1;
+                document.getElementById("allMap").style.display = "block"
                 }
             if (xhr.responseText == "Denied"){
                 document.getElementById("Log-btn").innerHTML = "Denied";
