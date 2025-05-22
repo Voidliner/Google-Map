@@ -1,3 +1,5 @@
+window.login_code = 0;
+
 var code = 1;
 
   document.addEventListener("DOMContentLoaded", function () {
