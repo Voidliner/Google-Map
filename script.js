@@ -2,11 +2,6 @@ window.login_code = 0;
 
 var code = 1;
 
-if (window.login_code == 0){
-  document.getElementById("allMap").style.display = "none";
-  } else {
-    document.getElementById("allMap").style.display = "block";
-    }
 
 
   document.addEventListener("DOMContentLoaded", function () {
