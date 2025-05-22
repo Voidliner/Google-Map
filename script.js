@@ -43,6 +43,7 @@ var code = 1;
             if (xhr.responseText == "Confirmed"){
                 document.getElementById("Log-btn").innerHTML = "Confirmed";
                 window.location.href = "map.html";
+                window.login_code = 1;
                 }
             if (xhr.responseText == "Denied"){
                 document.getElementById("Log-btn").innerHTML = "Denied";
