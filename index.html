@@ -264,9 +264,13 @@
 </head>
 <body>
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        alert(login_code);
-    });
+    document.addEventListener("visibilitychange", function() {
+    if (document.visibilityState === "visible") {
+        alert("User is back on the page.");
+        window.login_code = 0;
+        // Optional: check if logged in, then redirect
+        }    
+      });
   </script>
   <img src="Visuals/visual_bg_2.png" alt="Background">
 
