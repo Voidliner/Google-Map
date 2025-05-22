@@ -2,11 +2,7 @@ window.login_code = 0;
 
 var code = 1;
 
-if (window.login_code == 0){
-    document.getElementById("allMap").style.opacity = "0";
-    } else {
-       document.getElementById("allMap").style.opacity = "1";
-    }
+
 
 
   document.addEventListener("DOMContentLoaded", function () {
