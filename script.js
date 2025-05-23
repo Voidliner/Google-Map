@@ -2,7 +2,8 @@ window.login_code = 0;
 
 var code = 1;
 
-
+if (window.login_code == 0)
+  }
 
 
   document.addEventListener("DOMContentLoaded", function () {
