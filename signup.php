@@ -44,12 +44,12 @@ try {
     }
 
     // Hash password
-    $hashedPassword = password_hash($plainPassword, PASSWORD_DEFAULT);
+    //$hashedPassword = password_hash($plainPassword, PASSWORD_DEFAULT);
 
     // Insert user
     $insertStmt = $pdo->prepare("INSERT INTO Accounts (username, password) VALUES (:username, :password)");
     $insertStmt->bindParam(':username', $username);
-    $insertStmt->bindParam(':password', $hashedPassword);
+    $insertStmt->bindParam(':password', $password);
 
     if ($insertStmt->execute()) {
         echo "User registered successfully.";
