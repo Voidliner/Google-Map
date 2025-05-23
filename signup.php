@@ -49,7 +49,7 @@ try {
     // Insert user
     $insertStmt = $pdo->prepare("INSERT INTO Accounts (username, password) VALUES (:username, :password)");
     $insertStmt->bindParam(':username', $username);
-    $insertStmt->bindParam(':password', $password);
+    $insertStmt->bindParam(':password', $plainPassword);
 
     if ($insertStmt->execute()) {
         echo "User registered successfully.";
