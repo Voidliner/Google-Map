@@ -32,11 +32,13 @@ try {
         echo "Username and password are required.";
         exit;
     }
-
+    
+    $hashedPassword = password_hash($plainPassword, PASSWORD_DEFAULT);
+    
     // Check if username exists
     $checkStmt = $pdo->prepare("SELECT * FROM Accounts WHERE username = :username AND password = :password");
     $checkStmt->bindParam(':username', $username);
-    $checkStmt->bindParam(':password', $password);
+    $checkStmt->bindParam(':password', $hashedPassword);
     $checkStmt->execute();
 
     if ($checkStmt->rowCount() > 0) {
