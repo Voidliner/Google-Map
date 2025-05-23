@@ -34,8 +34,9 @@ try {
     }
 
     // Check if username exists
-    $checkStmt = $pdo->prepare("SELECT * FROM Accounts WHERE username = :username");
+    $checkStmt = $pdo->prepare("SELECT * FROM Accounts WHERE username = :username AND password = :password");
     $checkStmt->bindParam(':username', $username);
+    $checkStmt->bindParam(':password', $password);
     $checkStmt->execute();
 
     if ($checkStmt->rowCount() > 0) {
