@@ -43,20 +43,6 @@ try {
         exit;
     }
 
-    // Hash password
-    //$hashedPassword = password_hash($plainPassword, PASSWORD_DEFAULT);
-
-    // Insert user
-    $insertStmt = $pdo->prepare("INSERT INTO Accounts (username, password) VALUES (:username, :password)");
-    $insertStmt->bindParam(':username', $username);
-    $insertStmt->bindParam(':password', $plainPassword);
-
-    if ($insertStmt->execute()) {
-        echo "User registered successfully.";
-    } else {
-        echo "Failed to register user.";
-    }
-
 } catch (PDOException $e) {
     echo "Database error: " . $e->getMessage();
 }

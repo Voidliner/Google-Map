@@ -32,17 +32,18 @@ try {
         echo "Username and password are required.";
         exit;
     }
-    
-    
-    
+
     // Check if username exists
-    $checkStmt = $pdo->prepare("SELECT * FROM Accounts WHERE username = :username AND password = :password");
+    $checkStmt = $pdo->prepare("SELECT * FROM Accounts WHERE username = :username");
     $checkStmt->bindParam(':username', $username);
-    $checkStmt->bindParam(':password', $plainPassword);
     $checkStmt->execute();
+
+    session_start();
 
     if ($checkStmt->rowCount() > 0) {
         echo "Confirmed";
+	
+	$_SESSION['user'] = $username;
         exit;
     } else {
         echo "Denied";

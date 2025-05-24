@@ -2,8 +2,6 @@ window.login_code = 0;
 
 var code = 1;
 
-
-
   document.addEventListener("DOMContentLoaded", function () {
     const signInBtn = document.getElementById("Signin-btn");
     const signUpBtn = document.getElementById("Signup-btn");
@@ -40,13 +38,10 @@ var code = 1;
       xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
-            alert(xhr.responseText);
             console.log("Login response:", xhr.responseText);
             if (xhr.responseText == "Confirmed"){
                 document.getElementById("Log-btn").innerHTML = "Confirmed";
-                window.location.href = "map.html";
-                window.login_code = 1;
-                document.getElementById("allMap").style.display = "block"
+                window.location.href = "map.php";
                 }
             if (xhr.responseText == "Denied"){
                 document.getElementById("Log-btn").innerHTML = "Denied";
@@ -76,4 +71,3 @@ var code = 1;
       xhr.send(params);
     });
   });
-
