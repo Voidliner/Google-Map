@@ -22,7 +22,6 @@ if (!isset($_SESSION['user'])) {
       overflow: hidden;
     }
 
-    /* Background map */
     #map {
       position: absolute;
       top: 0;
@@ -32,7 +31,6 @@ if (!isset($_SESSION['user'])) {
       z-index: 0;
     }
 
-    /* Overlay circle map */
     .circle-wrapper {
       position: absolute;
       top: 50%;
@@ -53,7 +51,6 @@ if (!isset($_SESSION['user'])) {
       pointer-events: auto;
     }
 
-    /* UI layer to ensure button stays above maps */
     #ui-layer {
       position: absolute;
       top: 0;
@@ -61,7 +58,7 @@ if (!isset($_SESSION['user'])) {
       width: 100%;
       height: 100%;
       z-index: 9999;
-      pointer-events: none; /* allow clicks to pass through unless overridden */
+      pointer-events: none;
     }
 
     #logoutBtn {
@@ -71,45 +68,56 @@ if (!isset($_SESSION['user'])) {
       width: 50px;
       height: 50px;
       background-image: url("Visuals/visual_menu_btn.png");
-      background-size: cover;         /* Cover the whole div */
-      background-position: center;    /* Center the image */
+      background-size: cover;
+      background-position: center;
       background-repeat: no-repeat;
       z-index: 10000;
-      pointer-events: auto; /* make the button clickable */
+      pointer-events: auto;
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
       font-weight: bold;
-      cursor: pointer
+      cursor: pointer;
+    }
+
+    #pac-input {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 300px;
+      padding: 8px 12px;
+      font-size: 16px;
+      z-index: 10000;
+      pointer-events: auto;
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 4px;
     }
   </style>
 </head>
 <body>
-  <!-- Background map -->
+  <input id="pac-input" type="text" placeholder="Search for places" />
+
   <div id="map"></div>
 
-  <!-- Overlay traffic map in circular container -->
   <div class="circle-wrapper">
     <div id="traffic-map"></div>
   </div>
 
-  <!-- UI Layer on top of all maps -->
   <div id="ui-layer">
     <div id="logoutBtn"></div>
   </div>
 
-  <!-- JS logic for menu or interactivity -->
-  <script src = "logout.js"></script>
+  <script src="logout.js"></script>
 
   <script>
-    let map, trafficMap;
+    let map, trafficMap, marker;
     let syncing = false;
 
     function initMap() {
       const centerCoords = { lat: 14.8370, lng: 120.8856 };
 
-      // Background map
       map = new google.maps.Map(document.getElementById("map"), {
         center: centerCoords,
         zoom: 12,
@@ -117,13 +125,6 @@ if (!isset($_SESSION['user'])) {
         disableDefaultUI: true,
       });
 
-      new google.maps.Marker({
-        position: centerCoords,
-        map: map,
-        title: "Plain Map",
-      });
-
-      // Circular traffic map
       trafficMap = new google.maps.Map(document.getElementById("traffic-map"), {
         center: centerCoords,
         zoom: 12,
@@ -134,9 +135,37 @@ if (!isset($_SESSION['user'])) {
       const trafficLayer = new google.maps.TrafficLayer();
       trafficLayer.setMap(trafficMap);
 
-      // Sync movement between maps
+      marker = new google.maps.Marker({
+        map: map,
+      });
+
+      // Sync both maps
       syncMaps(map, trafficMap);
       syncMaps(trafficMap, map);
+
+      // Initialize Autocomplete
+      const input = document.getElementById("pac-input");
+      const autocomplete = new google.maps.places.Autocomplete(input);
+      autocomplete.bindTo("bounds", map);
+
+      autocomplete.addListener("place_changed", () => {
+        const place = autocomplete.getPlace();
+
+        if (!place.geometry || !place.geometry.location) {
+          alert("No details available for input: '" + place.name + "'");
+          return;
+        }
+
+        const location = place.geometry.location;
+
+        map.setCenter(location);
+        map.setZoom(15);
+        trafficMap.setCenter(location);
+        trafficMap.setZoom(15);
+
+        marker.setPosition(location);
+        marker.setVisible(true);
+      });
     }
 
     function syncMaps(source, target) {
@@ -150,9 +179,9 @@ if (!isset($_SESSION['user'])) {
     }
   </script>
 
-  <!-- Load Google Maps API -->
+  <!-- Load Google Maps API with Places library -->
   <script 
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDp1VnY9DWXcVL1xfkiN7PYzzRh0zgQETU&callback=initMap" 
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDp1VnY9DWXcVL1xfkiN7PYzzRh0zgQETU&libraries=places&callback=initMap" 
     async 
     defer>
   </script>
