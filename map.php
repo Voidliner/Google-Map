@@ -85,7 +85,7 @@ if (!isset($_SESSION['user'])) {
       position: absolute;
       top: 20px;
       left: 20px;
-      width: 300px;
+      width: 180px;
       padding: 8px 12px;
       font-size: 16px;
       z-index: 10000;
